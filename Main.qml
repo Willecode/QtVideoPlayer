@@ -1,12 +1,13 @@
 import QtQuick
 import QtMultimedia
+import VideoPlayer //MediaPlayerExtended
 Window {
     width: 640
     height: 480
     visible: true
     title: qsTr("Media Player")
     color: "black"
-    MediaPlayer {
+    MediaPlayerExtended {
         id: mediaPlayer
         source: "C:/Users/wille/Downloads/cat.mp4"
         audioOutput: audioOutput

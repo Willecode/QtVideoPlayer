@@ -11,7 +11,7 @@ Rectangle {
     width: parent.width
     height: 100
     color:"transparent"
-    property MediaPlayer mediaPlayer
+    property MediaPlayerExtended mediaPlayer
     property AudioOutput audioOutput
     MouseArea{
         id: mouseHover
@@ -19,6 +19,25 @@ Rectangle {
         anchors.fill: parent
         onEntered: visibleAnim.start()
     }
+    Popup {
+            id: popup
+            width: 200
+            height: 300
+            focus: true
+            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+            contentItem: Column{
+                Button{
+                    text: "Choose File"
+                    onClicked: fileDialog.open()
+                }
+                Button {
+                    text: "Save Screenshot"
+                    onClicked: {
+                        mediaPlayer.saveScreenshot()
+                    }
+                }
+            }
+        }
     Rectangle{
         id: controlsPanel
         anchors.fill: parent
@@ -116,13 +135,13 @@ Rectangle {
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
                 onClicked: {
-                    fileDialog.open()
+                    popup.open()
                 }
 
                 FileDialog {
                     id: fileDialog
                     title: "Please choose a file"
-                    currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+                    // currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
                     onAccepted: {
                         mediaPlayer.source = selectedFile
                     }
