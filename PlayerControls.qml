@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls.Fusion
 import QtMultimedia
 import QtQuick.Layouts
 import QtQuick.Dialogs
@@ -50,15 +50,16 @@ Rectangle {
             id: visibleAnim
             target: controlsPanel
             property: "opacity"
-            from: .5
+            from: 1
             to: 0
-            duration: 5000
+            duration: 2000
             easing.type: Easing.InExpo
         }
         GridLayout{
             rows: 2
             columns: 3
             anchors.fill: parent
+            uniformCellWidths: true
             Slider{
                 id: videoScrub
                 Layout.row: 0
@@ -103,6 +104,13 @@ Rectangle {
                     icon.color: "white"
                     icon.width: 20
                     icon.height: icon.width
+                    transform: Rotation {
+                        angle: 180
+                        origin.x: backBtn.width / 2
+                        origin.y: backBtn.height / 2
+                    }
+
+
                 }
                 RoundButton {
                     implicitHeight: 55
