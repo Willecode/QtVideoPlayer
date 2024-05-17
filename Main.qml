@@ -19,7 +19,6 @@ Window {
         anchors.fill: parent
         PlayerControls {
             z: 100
-            // anchors.bottom: videoOutput.bottom
             mediaPlayer: mediaPlayer
             audioOutput: audioOutput
         }

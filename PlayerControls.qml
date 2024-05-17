@@ -6,10 +6,9 @@ import QtQuick.Dialogs
 
 Rectangle {
     id: root
-    anchors.bottom: parent.bottom
+
     anchors.horizontalCenter: parent.horizontalCenter
-    width: parent.width
-    height: 100
+    anchors.fill: parent
     color:"transparent"
     property MediaPlayerExtended mediaPlayer
     property AudioOutput audioOutput
@@ -17,7 +16,7 @@ Rectangle {
         id: mouseHover
         hoverEnabled: true
         anchors.fill: parent
-        onEntered: visibleAnim.start()
+        onPositionChanged: visibleAnim.restart()
     }
     Popup {
             id: popup
@@ -40,7 +39,9 @@ Rectangle {
         }
     Rectangle{
         id: controlsPanel
-        anchors.fill: parent
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: 100
         border.color: "#000000"
         border.width: 2
         color: "#2e2f30"
@@ -104,7 +105,8 @@ Rectangle {
                     implicitHeight: 55
                     implicitWidth: 55
                     id: playBtn
-                    text: "S"
+                    icon.source: "qrc:/assets/play.png"
+                    icon.color: "transparent"
                     Layout.alignment: Qt.AlignCenter
                     onClicked: {
                         if (mediaPlayer.playing){
@@ -135,13 +137,22 @@ Rectangle {
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
                 onClicked: {
-                    popup.open()
+                    menu.popup(Qt.point(menuBtn.x, menuBtn.y - 100), menuBtn)
                 }
-
+                Menu {
+                    id: menu
+                    MenuItem {
+                        text: "Choose Video"
+                        onClicked: fileDialog.open()
+                    }
+                    MenuItem {
+                        text: "Save Screenshot"
+                        onClicked: mediaPlayer.saveScreenshot()
+                        }
+                }
                 FileDialog {
                     id: fileDialog
                     title: "Please choose a file"
-                    // currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
                     onAccepted: {
                         mediaPlayer.source = selectedFile
                     }
