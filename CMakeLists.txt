@@ -24,6 +24,7 @@ qt_add_qml_module(appVideoPlayer
             assets/next.svg
             assets/pause.svg
             assets/menu.svg
+            assets/speed.svg
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

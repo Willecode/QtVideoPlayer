@@ -182,7 +182,7 @@ Rectangle {
                     implicitHeight: 50
                     implicitWidth: 50
                     id: speedBtn
-                    icon.source: "assets/menu.svg"
+                    icon.source: "assets/speed.svg"
                     icon.color: "white"
                     icon.width: 30
                     icon.height: icon.width
