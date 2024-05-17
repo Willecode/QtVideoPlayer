@@ -144,39 +144,90 @@ Rectangle {
                     icon.height: icon.width
                 }
             }
-            RoundButton {
-                implicitHeight: 50
-                implicitWidth: 50
-                id: menuBtn
-                icon.source: "assets/menu.svg"
-                icon.color: "white"
-                icon.width: 30
-                icon.height: icon.width
+            RowLayout {
                 Layout.leftMargin: 20
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
-                onClicked: {
-                    menu.popup(Qt.point(menuBtn.x, menuBtn.y - 100), menuBtn)
-                }
-                Menu {
-                    id: menu
-                    MenuItem {
-                        text: "Choose Video"
-                        onClicked: fileDialog.open()
+                RoundButton {
+                    implicitHeight: 50
+                    implicitWidth: 50
+                    id: menuBtn
+                    icon.source: "assets/menu.svg"
+                    icon.color: "white"
+                    icon.width: 30
+                    icon.height: icon.width
+                    onClicked: {
+                        menu.popup(Qt.point(menuBtn.x, menuBtn.y - 100), menuBtn)
                     }
-                    MenuItem {
-                        text: "Save Screenshot"
-                        onClicked: mediaPlayer.saveScreenshot()
+                    Menu {
+                        id: menu
+                        MenuItem {
+                            text: "Choose Video"
+                            onClicked: fileDialog.open()
                         }
-                }
-                FileDialog {
-                    id: fileDialog
-                    title: "Please choose a file"
-                    onAccepted: {
-                        mediaPlayer.source = selectedFile
+                        MenuItem {
+                            text: "Save Screenshot"
+                            onClicked: mediaPlayer.saveScreenshot()
+                            }
+                    }
+                    FileDialog {
+                        id: fileDialog
+                        title: "Please choose a file"
+                        onAccepted: {
+                            mediaPlayer.source = selectedFile
+                        }
                     }
                 }
+                RoundButton {
+                    implicitHeight: 50
+                    implicitWidth: 50
+                    id: speedBtn
+                    icon.source: "assets/menu.svg"
+                    icon.color: "white"
+                    icon.width: 30
+                    icon.height: icon.width
+                    onClicked: {
+                        speedMenu.popup(Qt.point(speedBtn.x, speedBtn.y - 250), speedBtn)
+                    }
+                    Menu {
+                        id: speedMenu
+                        MenuItem {
+                            text: "2"
+                            onClicked: mediaPlayer.setPlaybackRate(2)
+                        }
+                        MenuItem {
+                            text: "1.75"
+                            onClicked: mediaPlayer.setPlaybackRate(1.75)
+                        }
+                        MenuItem {
+                            text: "1.5"
+                            onClicked: mediaPlayer.setPlaybackRate(1.5)
+                        }
+                        MenuItem {
+                            text: "1.25"
+                            onClicked: mediaPlayer.setPlaybackRate(1.25)
+                        }
+                        MenuItem {
+                            text: "1"
+                            onClicked: mediaPlayer.setPlaybackRate(1)
+                        }
+                        MenuItem {
+                            text: "0.75"
+                            onClicked: mediaPlayer.setPlaybackRate(.75)
+                        }
+                        MenuItem {
+                            text: "0.5"
+                            onClicked: mediaPlayer.setPlaybackRate(.5)
+                        }
+                        MenuItem {
+                            text: "0.25"
+                            onClicked: mediaPlayer.setPlaybackRate(.25)
+                        }
+                    }
+                }
+
             }
+
 
         }
     }
