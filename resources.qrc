@@ -1,6 +1,0 @@
-<RCC>
-    <qresource prefix="/">
-        <file alias="play.svg">assets/play.svg</file>
-        <file>assets/play.png</file>
-    </qresource>
-</RCC>

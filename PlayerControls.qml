@@ -99,23 +99,28 @@ Rectangle {
                     implicitWidth: 40
                     Layout.alignment: Qt.AlignCenter
                     id: backBtn
-                    text: "<"
+                    icon.source: "assets/next.svg"
+                    icon.color: "white"
+                    icon.width: 20
+                    icon.height: icon.width
                 }
                 RoundButton {
                     implicitHeight: 55
                     implicitWidth: 55
                     id: playBtn
-                    icon.source: "qrc:/assets/play.png"
-                    icon.color: "transparent"
+                    icon.source: "assets/pause.svg"
+                    icon.color: "white"
+                    icon.width: 30
+                    icon.height: icon.width
                     Layout.alignment: Qt.AlignCenter
                     onClicked: {
                         if (mediaPlayer.playing){
                             mediaPlayer.pause()
-                            playBtn.text = "P"
+                            playBtn.icon.source = "assets/play.svg"
                         }
                         else{
                             mediaPlayer.play()
-                            playBtn.text = "S"
+                            playBtn.icon.source = "assets/pause.svg"
                         }
                     }
                 }
@@ -125,14 +130,20 @@ Rectangle {
                     implicitHeight: 40
                     implicitWidth: 40
                     id: nextBtn
-                    text: ">"
+                    icon.source: "assets/next.svg"
+                    icon.color: "white"
+                    icon.width: 20
+                    icon.height: icon.width
                 }
             }
             RoundButton {
                 implicitHeight: 50
                 implicitWidth: 50
                 id: menuBtn
-                text: "M"
+                icon.source: "assets/menu.svg"
+                icon.color: "white"
+                icon.width: 30
+                icon.height: icon.width
                 Layout.leftMargin: 20
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
