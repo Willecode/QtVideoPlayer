@@ -75,31 +75,20 @@ Rectangle {
                 Layout.column: 1
                 Layout.alignment: Qt.AlignCenter
                 spacing: 2
-                RoundButton {
-                    implicitHeight: 40
-                    implicitWidth: 40
-                    Layout.alignment: Qt.AlignCenter
+                ControlPanelButton {
                     id: backBtn
+                    Layout.alignment: Qt.AlignCenter
                     icon.source: "assets/next.svg"
-                    icon.color: "white"
-                    icon.width: 20
-                    icon.height: icon.width
-                    transform: Rotation {
-                        angle: 180
-                        origin.x: backBtn.width / 2
-                        origin.y: backBtn.height / 2
-                    }
+                    mirrorIcon: true
                     onClicked : mediaPlayer.setPosition(0)
                 }
-                RoundButton {
+                ControlPanelButton {
                     id: playBtn
+                    Layout.alignment: Qt.AlignCenter
                     implicitHeight: 55
                     implicitWidth: 55
                     icon.source: "assets/pause.svg"
-                    icon.color: "white"
                     icon.width: 30
-                    icon.height: icon.width
-                    Layout.alignment: Qt.AlignCenter
                     Connections {
                         target: mediaPlayer
                         function onPlayingChanged() {
@@ -114,7 +103,6 @@ Rectangle {
                                 playBtn.icon.source = "assets/play.svg"
                                 break
                             }
-
                         }
                     }
                     onClicked: {
@@ -126,16 +114,9 @@ Rectangle {
                         }
                     }
                 }
-                RoundButton {
+                ControlPanelButton {
                     id: nextBtn
-                    Layout.row: 1
-                    Layout.column: 2
-                    implicitHeight: 40
-                    implicitWidth: 40
                     icon.source: "assets/next.svg"
-                    icon.color: "white"
-                    icon.width: 20
-                    icon.height: icon.width
                     onClicked : mediaPlayer.setPosition(mediaPlayer.duration)
                 }
             }
@@ -143,14 +124,9 @@ Rectangle {
                 Layout.leftMargin: 20
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
-                RoundButton {
+                ControlPanelButton {
                     id: menuBtn
-                    implicitHeight: 50
-                    implicitWidth: 50
                     icon.source: "assets/menu.svg"
-                    icon.color: "white"
-                    icon.width: 30
-                    icon.height: icon.width
                     onClicked: {
                         generalMenu.open()
                     }
@@ -175,14 +151,11 @@ Rectangle {
                         }
                     }
                 }
-                RoundButton {
+                ControlPanelButton {
                     id: speedBtn
-                    implicitHeight: 50
-                    implicitWidth: 50
                     icon.source: "assets/speed.svg"
-                    icon.color: "white"
-                    icon.width: 30
-                    icon.height: icon.width
+                    icon.width: 25
+                    icon.height: 25
                     onClicked: {
                         speedMenu.open()
                     }
