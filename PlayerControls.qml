@@ -1,43 +1,23 @@
 import QtQuick
-import QtQuick.Controls.Fusion
 import QtMultimedia
 import QtQuick.Layouts
 import QtQuick.Dialogs
+import QtQuick.Controls.Fusion
 
 Rectangle {
     id: root
-
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
     color:"transparent"
     property MediaPlayerExtended mediaPlayer
     property AudioOutput audioOutput
-    MouseArea{
+    MouseArea {
         id: mouseHover
         hoverEnabled: true
         anchors.fill: parent
         onPositionChanged: visibleAnim.restart()
     }
-    Popup {
-            id: popup
-            width: 200
-            height: 300
-            focus: true
-            closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
-            contentItem: Column{
-                Button{
-                    text: "Choose File"
-                    onClicked: fileDialog.open()
-                }
-                Button {
-                    text: "Save Screenshot"
-                    onClicked: {
-                        mediaPlayer.saveScreenshot()
-                    }
-                }
-            }
-        }
-    Rectangle{
+    Rectangle {
         id: controlsPanel
         anchors.bottom: parent.bottom
         width: parent.width
@@ -55,7 +35,7 @@ Rectangle {
             duration: 2000
             easing.type: Easing.InExpo
         }
-        GridLayout{
+        GridLayout {
             rows: 2
             columns: 3
             anchors.fill: parent
@@ -72,14 +52,14 @@ Rectangle {
                 value: mediaPlayer.position
                 to: mediaPlayer.duration
                 Timer {
-                        interval: 100; running: true; repeat: true
-                        onTriggered: videoScrub.value = mediaPlayer.position
-                    }
+                    interval: 100; running: true; repeat: true
+                    onTriggered: videoScrub.value = mediaPlayer.position
+                }
                 onMoved: {
                     mediaPlayer.position = videoScrub.value
                 }
             }
-            Slider{
+            Slider {
                 id: volumeSlider
                 Layout.row: 1
                 Layout.column: 0
@@ -109,39 +89,54 @@ Rectangle {
                         origin.x: backBtn.width / 2
                         origin.y: backBtn.height / 2
                     }
-
-
+                    onClicked : mediaPlayer.setPosition(0)
                 }
                 RoundButton {
+                    id: playBtn
                     implicitHeight: 55
                     implicitWidth: 55
-                    id: playBtn
                     icon.source: "assets/pause.svg"
                     icon.color: "white"
                     icon.width: 30
                     icon.height: icon.width
                     Layout.alignment: Qt.AlignCenter
+                    Connections {
+                        target: mediaPlayer
+                        function onPlayingChanged() {
+                            switch (mediaPlayer.playbackState) {
+                            case MediaPlayer.PlayingState:
+                                playBtn.icon.source = "assets/pause.svg"
+                                break
+                            case MediaPlayer.PausedState:
+                                playBtn.icon.source = "assets/play.svg"
+                                break
+                            case MediaPlayer.StoppedState:
+                                playBtn.icon.source = "assets/play.svg"
+                                break
+                            }
+
+                        }
+                    }
                     onClicked: {
                         if (mediaPlayer.playing){
                             mediaPlayer.pause()
-                            playBtn.icon.source = "assets/play.svg"
                         }
                         else{
                             mediaPlayer.play()
-                            playBtn.icon.source = "assets/pause.svg"
                         }
                     }
                 }
                 RoundButton {
+                    id: nextBtn
                     Layout.row: 1
                     Layout.column: 2
                     implicitHeight: 40
                     implicitWidth: 40
-                    id: nextBtn
                     icon.source: "assets/next.svg"
                     icon.color: "white"
                     icon.width: 20
                     icon.height: icon.width
+                    onClicked : mediaPlayer.setPosition(mediaPlayer.duration)
                 }
             }
             RowLayout {
@@ -149,18 +144,19 @@ Rectangle {
                 Layout.rightMargin: Layout.leftMargin
                 Layout.alignment: Qt.AlignRight
                 RoundButton {
+                    id: menuBtn
                     implicitHeight: 50
                     implicitWidth: 50
-                    id: menuBtn
                     icon.source: "assets/menu.svg"
                     icon.color: "white"
                     icon.width: 30
                     icon.height: icon.width
                     onClicked: {
-                        menu.popup(Qt.point(menuBtn.x, menuBtn.y - 100), menuBtn)
+                        generalMenu.open()
                     }
                     Menu {
-                        id: menu
+                        id: generalMenu
+                        y: height *(-1)
                         MenuItem {
                             text: "Choose Video"
                             onClicked: fileDialog.open()
@@ -168,29 +164,31 @@ Rectangle {
                         MenuItem {
                             text: "Save Screenshot"
                             onClicked: mediaPlayer.saveScreenshot()
-                            }
+                        }
                     }
                     FileDialog {
                         id: fileDialog
                         title: "Please choose a file"
                         onAccepted: {
                             mediaPlayer.source = selectedFile
+                            playBtn.clicked()
                         }
                     }
                 }
                 RoundButton {
+                    id: speedBtn
                     implicitHeight: 50
                     implicitWidth: 50
-                    id: speedBtn
                     icon.source: "assets/speed.svg"
                     icon.color: "white"
                     icon.width: 30
                     icon.height: icon.width
                     onClicked: {
-                        speedMenu.popup(Qt.point(speedBtn.x, speedBtn.y - 250), speedBtn)
+                        speedMenu.open()
                     }
                     Menu {
                         id: speedMenu
+                        y: height * (-1)
                         MenuItem {
                             text: "2"
                             onClicked: mediaPlayer.setPlaybackRate(2)
@@ -225,10 +223,7 @@ Rectangle {
                         }
                     }
                 }
-
             }
-
-
         }
     }
 }

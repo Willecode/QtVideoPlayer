@@ -1,6 +1,8 @@
 import QtQuick
 import QtMultimedia
+import QtQuick.Controls.Fusion
 import VideoPlayer //MediaPlayerExtended
+
 Window {
     width: 640
     height: 480
@@ -9,28 +11,29 @@ Window {
     color: "black"
     MediaPlayerExtended {
         id: mediaPlayer
-        source: "C:/Users/wille/Downloads/cat.mp4"
         audioOutput: audioOutput
         videoOutput: videoOutput
     }
     VideoOutput {
-        z: 1
         id: videoOutput
+        z: 1
         anchors.fill: parent
         PlayerControls {
-            z: 100
+            z: 2
             mediaPlayer: mediaPlayer
             audioOutput: audioOutput
         }
-    AudioOutput{
-        id: audioOutput
     }
+    AudioOutput {
+        id: audioOutput
     }
     MouseArea {
         anchors.fill: parent
         onPressed: mediaPlayer.play()
     }
-    Component.onCompleted: {
-        mediaPlayer.play()
+    Text {
+        text: "No video to play"
+        color: "white"
+        anchors.centerIn: parent
     }
 }
